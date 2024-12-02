@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario con Bootstrap</title>
+  <!-- Enlace a Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mt-5 mb-4">Editar Letras</h1>
+    <!-- Formulario -->
+    <form id="formulario" class="needs-validation" novalidate>
+      <!-- Número de Letra -->
+      <div class="mb-3">
+        <label for="numeroLetra" class="form-label">N° Letra:</label>
+        <input type="text" class="form-control" id="numeroLetra" name="numeroLetra" required>
+        <div class="invalid-feedback">Por favor, ingresa el número de letra.</div>
+      </div>
+      <!-- Botones -->
+      
+      <!-- Detalles de la Letra -->
+      <div class="mt-5">
+        <h2>Detalles de la Letra</h2>
+        <!-- Estado -->
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado:</label>
+          <input type="text" class="form-control" id="estado" name="estado">
+        </div>
+        <!-- Banco -->
+        <div class="mb-3">
+          <label for="banco" class="form-label">Banco:</label>
+          <input type="text" class="form-control" id="banco" name="banco">
+        </div>
+        <!-- Fechas -->
+        <div class="row">
+          <div class="col-md-4">
+            <label for="fechaErnold" class="form-label">Fecha ERONALD:</label>
+            <input type="date" class="form-control" id="fechaErnold" name="fechaErnold">
+          </div>
+          <div class="col-md-4">
+            <label for="fechaRCliente" class="form-label">Fecha RCliente:</label>
+            <input type="date" class="form-control" id="fechaRCliente" name="fechaRCliente">
+          </div>
+          <div class="col-md-4">
+            <label for="fechaAcepCliente" class="form-label">Fecha Acep Cliente:</label>
+            <input type="date" class="form-control" id="fechaAcepCliente" name="fechaAcepCliente">
+          </div>
+
+         
+        </div>
+      </div>
+      <br>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary me-md-2" id="searchButton">Buscar</button>
+        <button type="submit" class="btn btn-success" id="btn-guardar">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <!-- Scripts de Bootstrap y validación de formularios -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
+  <script>
+    // Agrega la clase 'was-validated' al formulario al hacer clic en el botón de guardar
+    document.getElementById('btn-guardar').addEventListener('click', function() {
+      var form = document.getElementById('formulario');
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    });
+  </script>
+</body>
+</html>

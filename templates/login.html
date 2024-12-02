@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEJIDOS JORGITO SAC</title>
+    <link rel="icon" href="/static/img/hilo-logo-search.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stilos.css') }}">
+    <script src="{{ url_for('static', filename='grafico.js') }}"></script>
+    <script src="{{ url_for('static', filename='calendario.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <style>
+        .table th {
+            font-size: 16px; /* Adjust the font size as needed */
+            /* Add any other styles you want to apply to the table headings */
+        }
+        html{
+            margin: 0px;
+            
+            
+        }
+        body {
+        background-image: url('/static/img/3.png'); 
+            margin: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        }
+
+
+        .body{
+            margin: 0;
+
+
+        }
+        .login-box{
+            width: 1000px;
+            margin: 20px auto ;
+            height: 700px;
+            backdrop-filter: blur(100px);
+            box-shadow: 0px 0px 30px rgb(169, 169, 175);
+        
+        }
+        #jorgito{
+            color: white;
+            font-weight: bold;
+        }
+        #tejidos{
+            font-weight: bold;
+        }
+        .i{
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <section class="body">
+            <div class="login-box">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="logo">
+                            <span class="logo-font"> <strong id="tejidos">Tejidos</strong>  </span><strong id="jorgito">Jorgito SAC</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <br>
+                        <h3 class="header-title  i">INICIAR SESIÓN:</h3>
+
+
+                        <form class="login-form"  action="/login" method="POST">
+                            <div class="form-group">
+                                <input type="text"  type="text" id="username" name="username" required class="form-control" placeholder="Usuario">
+                            </div>
+                            <div class="form-group">
+                                <input type="Password"  id="password" name="password" required  class="form-control" placeholder="Contraseña">
+                                
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block"  type="submit" >INGRESAR</button>
+                            </div>
+                    
+                        </form>
+                    </div>
+                    <div class="col-sm-6 hide-on-mobile">
+                        <div id="demo" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ul class="carousel-indicators">
+                                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                                <li data-target="#demo" data-slide-to="1"></li>
+                            </ul>
+                            <!-- The slideshow -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="slider-feature-card">
+                                        <img src="https://i.imgur.com/YMn8Xo1.png" alt="">
+                                        <h3 class="slider-title">Descargas de Reportes</h3>
+                                        <p class="slider-description">Descarga los reportes de letras emitidas</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="slider-feature-card">
+                                        <img src="https://i.imgur.com/Yi5KXKM.png" alt="">
+                                        <h3 class="slider-title">Registro de Letras</h3>
+                                        <p class="slider-description">registra las fechas de entraga al cliente</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Left and right controls -->
+                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo" data-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

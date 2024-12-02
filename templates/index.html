@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- letras-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <title>TEJIDOS JORGITO SAC</title>
+    <link rel="icon" href="/static/img/hilo-logo-search.png">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='grafico.js') }}"></script>
+    <script src="{{ url_for('static', filename='calendario.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <style>
+        .table th,
+        .table td {
+            font-size: 11px;
+        }
+
+        /* Personaliza el color de fondo de las filas alternas */
+        #sugerenciasVendedores {
+            max-height: 200px;
+            /* Ajusta la altura máxima si es necesario */
+            overflow-y: auto;
+            /* Añade una barra de desplazamiento si hay muchas sugerencias */
+            z-index: 1000;
+            /* Asegúrate de que las sugerencias se muestren sobre otros elementos */
+        }
+
+        .modal-xl {
+            max-width: 90%;
+            /* Ajusta el tamaño según tus necesidades */
+        }
+
+        /* Ajustes para alinear el botón "Convertir a Letras" */
+        .row.align-items-end {
+            align-items: flex-end;
+        }
+    </style>
+    <style>
+        .container {
+            top: 0;
+            height: auto;
+            position: sticky;
+            margin-left: 160px;
+            margin-right: 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 2000px;
+        }
+
+        #searchForm {
+            border-width: 1px;
+            border-style: solid;
+            border-color: white;
+            box-shadow: 1px 1px 0.8rem #797070;
+            border-radius: 20px;
+            backdrop-filter: blur(80px);
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 310px;
+            position: sticky;
+            top: 0px;
+            bottom: 0px;
+        }
+
+        .mb-4 {
+            width: 500px;
+            margin: auto;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px #797070;
+            border-color: white;
+            border-width: 1px;
+            border-style: solid;
+            color: #1A5493;
+
+        }
+
+        .mt-4 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .mt-4{
+            margin-top: 20px;
+        }
+
+        .p {
+            margin-left: 5px;
+            margin-right: 5px;
+            width: 150px;
+        }
+
+        .btn-primary {
+            background-color: #1A5493;
+        }
+
+
+
+        .btn-primary:hover {
+            box-shadow: 2px 2px 1rem #1A5493;
+        }
+
+        .btn-success:hover {
+            box-shadow: 2px 2px 1rem #198754;
+        }
+
+        .btn-warning:hover {
+            box-shadow: 2px 2px 1rem #FFC107;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 2px 2px 1rem #BB2D3B;
+        }
+
+        .btn-info:hover {
+            box-shadow: 2px 2px 1rem #31D2F2;
+        }
+
+        .mb-4 {
+            font-family: "Archivo Black", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .table-dark {
+            top: 300px;
+            bottom: 0px;
+            position: sticky;
+        }
+        #errorRazonSocial{
+            display: flex;
+
+        }
+        #firstLine{
+            width: 3px;
+            height: 39px;
+            background-color: #1A5493;
+            margin: 0px 10px;
+        }
+        #secondLine{
+            width: 3px;
+            height: 39px;
+            background-color: #1A5493;
+            margin: 0px 10px;
+        }
+        #firtSpan{
+            color: #1A5493;
+            margin-left: 300px;
+            text-shadow: 2px 2px 5px #1A5493;
+        }
+        #secondSpan{
+            color: #1A5493;
+            margin-left: 330px;
+            text-shadow: 2px 2px 10px #1A5493;
+
+        }
+        #thirdSpan{
+            color: #1A5493;
+            margin-left: 245px;
+            text-shadow: 2px 2px 10px #1A5493;
+        }
+        #hr{
+            margin: 0px;
+        }
+        #space{
+            margin: 0px 10px;
+        }
+        #botonBuscarCliente{
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+        .btnRegisrar{
+            margin-left: 10px;
+        }
+        .span{
+            width: 30px;
+            align-content: center;
+            justify-content: center;
+        }
+        .limpiar{
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            margin-left: 62px;
+        }
+        .limpiar1{
+            display: flex;
+            align-items: center  ;
+            justify-content: right;
+            width: 170px;
+            height: 40px;
+            margin-left: 660px;
+        }
+        .limpiar2{
+            margin-left: 250px;
+            width: 170px;
+            padding-right: 0px;
+        }
+        .modal-header{
+            background-color: #1A5493;
+            /* background-image: url('/static/img/5.png'); */
+            color: white;
+        }
+        
+        #rapido{
+            font-weight: bold;
+        }
+        .tituloG{
+            /* background-color: #1A5493; */
+            background-image: url('/static/img/5.png'); 
+            height: 70px;
+            color: #1A5493;
+            font-weight: bold;
+        }
+        body{
+            margin-top: 0px;
+        }
+        .junto{
+            margin-top: 10px;
+            width: 200px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-color: white;
+        }
+        .titulo{
+            align-items: center;
+            justify-content: center;
+            margin-right: 200px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 5px 5px 5px  black;
+            cursor: pointer;
+        }
+        .icon{
+            margin-right: 440px;
+            box-shadow: 0px 0px 10px white;
+        }
+        .registraBanco{
+            width: 200px;
+        }
+        .referencia{
+            width: 500px;
+        }
+        .btn-close{
+            color: white;
+            background-color: white;
+        }
+        #cod_cliente{
+            width: 80px;
+            margin-right: 20px;
+        }
+        .numeroLetraCambio{
+            width: 300px;
+            margin-right: 10px;
+        }
+        .modal-body.d-flex {
+            justify-content: space-around; 
+        }
+        #h5r{
+            height: 25px;
+            text-decoration: underline;
+
+        }
+        #estado{
+            background-color: #ebe4e4;
+        }
+       
+        
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <form action="/logout" method="POST" class="tituloG d-flex justify-content-end">
+        <div class="d-flex justify-content-center ">
+            <img class="img icon" src="{{ url_for('static', filename='img/logo.png') }}" alt="logo" class="img-fluid mb-3"
+                style="max-width: 400px;">
+        </div>
+        
+        <div class="titulo align-self-center mr-3">
+            <strong>SISTEMA DE LETRAS</strong>
+        </div>
+        <button type="button" class="junto p btn btn-success" onclick="descargarExcel()">Descargar Excel</button>
+        <input type="submit" class="solo junto btn btn-primary" value="Cerrar sesión">
+    </form>
+<br>
+<br>
+        <!-- Formulario de Búsqueda -->
+        <form id="searchForm">
+            <br>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="numeroBoleta"><strong>Número de Letra:</strong> </label>
+                    <input type="text" class="form-control" id="numeroBoleta" name="numeroBoleta"
+                        placeholder="X-0000" oninput="validarEntrada(event)">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="ruc"><strong >RUC (Código Cliente):</strong> </label>
+                    <input type="text" class="form-control" id="ruc" name="ruc"  placeholder="Ingrese el Ruc" oninput="validarNumeros(event)">
+                    <div id="errorRUC" style="color: red; display: none;">Ingrese solo números.</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="razonSocial"><strong>Razón Social:</strong> </label>
+                    <input type="text" class="form-control" id="razonSocial" name="razonSocial" 
+                        placeholder="Ingrese la razón social" oninput="validarLetras(event)">
+                    <div  id="errorRazonSocial" style="color: red; display: none;">Ingrese solo letras.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 mb-2">
+                    <label for="tipoFecha" class="d-block">Buscar por:</label>
+                    <select class="form-control" id="tipoFecha" name="tipoFecha">
+                        <option value="vencimiento">Fecha de Vencimiento</option>
+                        <option value="giro">Fecha de Giro</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <label for="fechaRange" class="d-block">Fecha:</label>
+                    <div class="d-flex">
+                        <input type="date" class="form-control me-2" id="fechaDesde" name="fechaDesde">
+                        <span class="align-self-center">a</span>
+                        <input type="date" class="form-control ms-2" id="fechaHasta" name="fechaHasta">
+                    </div>
+                </div>
+                <!-- busqueda por estado -->
+                <div class="col-md-2 mb-3">
+                    <label for="estadoLetraInput" class="form-label"><strong>Estado Letra:</strong> </label>
+                    <input type="text" class="form-control" id="estadoLetraInput" name="estadoLetra"
+                        placeholder="Ingrese Estado Letra" oninput="validarLetras(event)">
+                        <div id="errorEstadoLetra" style="color: red; display: none;">Ingrese solo letras.</div>
+                    </div>
+            </div>
+            <hr id="hr">
+            <div><span id="firtSpan"><strong>REALIZAR CONSULTA:</strong></span><span id = "secondSpan"><strong>MODIFICAR REGISTRO:</strong></span><span id = "thirdSpan"><strong>NUEVO REGISTRO:</strong></span></div>
+            <div class="mt-4">
+                <button type="button" class="p btn btn-primary" onclick="buscarLetras()">Buscar</button>
+                <button type="button" class="p btn btn-primary" onclick="nuevaConsulta()">Limpiar Campos</button>
+                <div id="firstLine"></div><!--Linea separadora-->
+                <button type="button" class="p btn btn-warning" onclick="abrirModal()">Fecha / Banco</button>
+                <button type="button" class="p btn btn-primary" onclick="abrirModalEstadoBanco()"> Estado banco</button>
+                <button type="button" class="p btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalFiltrarLetras">Numero Únicos</button>
+                <button type="button" class="p btn btn-info" data-bs-toggle="modal" data-bs-target="#registroLetraModal">Modificar letra</button>
+                <div id="secondLine"></div>
+                <button type="button" class="p btn btn-primary" id="botonAbrirModal" data-bs-toggle="modal" data-bs-target="#modalFormulario" data-bs-backdrop = "static">Nueva Letra</button>
+            </div>
+        </form>
+        
+        <!-- Tabla de Resultados -->
+ 
+    </div>
+    <div class="mt-8" id="resultadosTabla" class="dataTable"></div>
+
+    <!-- Modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalFormulario" tabindex="-1" role="dialog" aria-labelledby="modalFormularioLabel" aria-hidden="true" data-bs-backdrop = "static">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document"> <!-- Modal extra grande -->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title title-modal-main" id="modalFormularioLabel"> <strong>REGISTRO DE LETRAS</strong> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario -->
+                    <form id="formularioDatos">
+
+                        <!-- Fila 3 -->
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="cod_cliente" id="rapido">RUC:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="cod_cliente" name="cod_cliente" required oninput="validateNumbers(event)" placeholder="Ingrese RUC">
+                                    <div class="input-group-append s">
+                                        <button class="btn btn-warning w-100" type="button"
+                                            id="botonBuscarCliente">BUSCAR RUC</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="span"> <strong>ó</strong> </span>
+                            <div class="form-group col-md-2 d-flex align-items-end">
+                                <button class="btn btn-primary w-100 btnRegisrar" type="button"
+                                    onclick="registrarCliente()">REGISTRAR RUC</button>
+                            </div>
+                            <button type="button" class="btn btn-danger limpiar1" onclick="limpiarOtrosInputs()">Limpiar Campos 1</button>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="tipo_producto" id="rapido">Tipo de Producto:</label>
+                                <select class="form-control" id="tipo_producto" name="tipo_producto" required>
+                                    <option value="TELA">Tela</option>
+                                    <option value="HILO">Hilo</option>
+                                    <option value="SST">SST </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="id_social" id="rapido">Rason Social:</label>
+                                <input type="text" class="form-control" id="id_social" name="id_social" required placeholder="Ingrese Rason Social">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="direccion_empresa" id="rapido">Dirección Empresa:</label>
+                                <input type="text" class="form-control" id="direccion_empresa" name="direccion_empresa"
+                                    required placeholder="Ingrese Direccion Empresa">
+                            </div>
+                        </div>
+                        <!-- Fila 4 -->
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="distrito" id="rapido">Distrito:</label>
+                                <input type="text" class="form-control" id="distrito" name="distrito" required placeholder="Ingrese Distrito">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="ciudad" id="rapido">Ciudad:</label>
+                                <input type="text" class="form-control" id="ciudad" name="ciudad" value="LIMA" required placeholder="Ingrese Ciudad">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="telefono_empresa" id="rapido">Teléfono Empresa:</label>
+                                <input type="text" class="form-control" id="telefono_empresa" name="telefono_empresa"
+                                    required oninput="validateNumbers(event)" placeholder="Telefono Empresarial">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="aval" id="rapido">Aval:</label>
+                                <input type="text" class="form-control" id="aval" name="aval" required placeholder="Ingrese Aval">
+                            </div>
+                        </div>
+                        <!-- Fila 5 -->
+                         <!-- <br>
+                        <div class="row">
+                            <h4>Datos Aval</h4>
+                        </div> -->
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="direccion_aval" id="rapido">Dirección de Aval:</label>
+                                <input type="text" class="form-control" id="direccion_aval" name="direccion_aval"
+                                    required placeholder="Ingrese Direccion Aval">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="distrito_aval" id="rapido">Distrito Aval:</label>
+                                <input type="text" class="form-control" id="distrito_aval" name="distrito_aval"
+                                    required placeholder="Ingrese Distrito Aval">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="celular" id="rapido">Celular:</label>
+                                <input type="text" class="form-control" id="celular" name="celular" required oninput="validateCelular(event)" placeholder="Ingrese N°Celular">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="dni" id="rapido">DNI:</label>
+                                <input type="text" class="form-control" id="dni" name="dni" required oninput="validateDni(event)" placeholder="Ingrese DNI">
+                            </div>
+                        </div>
+<hr>
+
+<button type="button" id="btnRegistrar1Letra"  class="btn btn-success verde" onclick="toggleForm()">REGISTRAR 1 LETRA</button>
+<button type="button" id="btnMostrar" class="btn btn-primary">REGISTRAR 2 LETRAS</button>
+
+
+                                            <div id="formulario" style="display:none;">
+
+                                                <!-- Fila 1 -->
+                                                <div class="row">
+                                                    <div class="form-group col-md-3" >
+                                                        <label for="numero_boleta" id="rapido">Número de letra:</label>
+                                                        <input type="text" class="form-control" id="numero_boleta" name="numero_boleta"
+                                                            required oninput="validateNumeroBoleta(event)" placeholder="X-0000">
+                                                    </div>
+                                                    <div class="form-group col-md-6 referencia">
+                                                        <label for="ref_giro" id="rapido">Referencia de Giro:</label>
+                                                        <input type="text" class="form-control" id="ref_giro" name="ref_giro" required oninput="validateNumeroBoleta(event)" placeholder="Ingrese Referencia Giro">
+                                                    </div>
+                                                    <div class="mb-3 registraBanco">
+                                                        <label for="bancoCobro" class="form-label"  id="rapido">Banco:</label>
+                                                        <select class="form-select" id="banco" name="bancoCobro">
+                                                                     <option value="SIN BANCO">SIN BANCO</option>
+                                                                      <option value="INTERBANK">INTERBANK</option>
+                                                                      <option value="BCP ">BCP </option>
+                                                                      <option value="SCOTIABANK">SCOTIABANK</option>
+                                                                      <option value="BBVA">BBVA</option>
+                                                         </select>
+                                                    </div>
+                                                    <div class="form-group col-md-3 limpiar2">
+                                                        <button type="button" class="btn btn-danger " onclick="limpiarCiertosInputs()">Limpiar Campos 2</button>
+                                                    </div>
+                                                
+                                                </div>
+                                                <!--fila 2 fecha de giro hasta vendedor-->
+                                                <div class="row">
+                                                    <div class="form-group col-md-3">
+                                                        <label for="fecha_giro" id="rapido">Fecha de Giro:</label>
+                                                        <input type="date" class="form-control" id="fecha_giro" name="fecha_giro" required>
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="dias_credito" id="rapido">Días de Crédito:</label>
+                                                        <input type="number" class="form-control" id="dias_credito" name="dias_credito"
+                                                            required placeholder="Ingrese dias Credito">
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="fecha_vence" id="rapido">Fecha de Vencimiento:</label>
+                                                        <input type="date" class="form-control" id="fecha_vence" name="fecha_vence" readonly>
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="seleccionarVendedor" id="rapido">Selecciona un Vendedor:</label>
+                                                        <div class="input-group">
+                                                            <input type="text" id="seleccionarVendedor" class="form-control"
+                                                                placeholder="Buscar vendedor" aria-label="Buscar vendedor">
+                                                            <div id="sugerenciasVendedores"
+                                                                class="list-group position-absolute bg-white border rounded mt-1"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Fila 3 importe -->
+                                                <div class="row align-items-end">
+                                                    <div class="form-group col-md-3">
+                                                        <label for="importe" id="rapido">Importe en Numeros:</label>
+                                                        <input type="text" class="form-control" id="importe" name="importe" required oninput="validateImporte(event)" placeholder="Ingrese Importe">
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                        <label for="moneda" id="rapido">Moneda:</label>
+                                                        <select class="form-control" id="moneda" name="moneda" required>
+                                                            <option value="SOLES">SOLES</option>
+                                                            <option value="DOLARES">DOLARES AMERICANOS</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-2 d-flex align-items-end">
+                                                        <button type="button" class="btn btn-warning w-100" id="botonConvertirALetras">CONVERTIR </button>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="importeLetras" id="rapido">Importe en Letras:</label>
+                                                        <input type="text" class="form-control" id="importeLetras" name="importeLetras"
+                                                            readonly placeholder="Salida de Importe">
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+
+                                                <br>
+
+<hr>
+<style>
+    /* ME DIO PEREZA SUBIR HASTA ARRIBA ACA LO PUSE */
+    #btnMostrar {
+        background: linear-gradient(to right, #007bff 50%, #207534 50%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        padding-top: 5px;
+    }
+
+    #btnMostrar:hover {
+        background: linear-gradient(to right, #0056b3 50%, #155d25 50%);
+    }
+
+    #btnMostrar:active {
+        background: linear-gradient(to right, #003366 50%, #186129 50%);
+    }
+</style>
+
+
+<!-- <button type="button" id="btnMostrar" class="btn btn-primary">REGISTRAR 2 LETRAS</button> -->
+
+
+
+<div class="modal-body d-flex flex-row">
+    <!-- Primer formulario (Primera Letra) -->
+    <form id="modificarLetraForm1" onsubmit="">
+        <div class="flex-column" id="form1" hidden>
+            
+            <h5 id="h5r"><strong>Especificaciones Primera Letra:</strong></h5>
+            <div class="col-md-4 mb-3">
+                <label for="numero_boleta_buscar_1" class="form-label n">Número de Letra:</label>
+                <input type="text" class="numeroLetraCambio1" id="numero_boleta_buscar_1" placeholder="Número de Letra" oninput="validarInput(this)">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="importe_nuevo_1" class="form-label n">Importe:</label>
+                <input type="number" class="numeroLetraCambio1" id="importe_nuevo_1" name="importe_nuevo_1" step="0.01">
+            </div>
+            <!-- GUARDAR CAMBIOS Y LIMPIAR -->
+            <div class="d-flex justify-content-start">
+                <button type="button" id="limpiarFirtsLetter" class="btn btn-danger ms-2">Limpiar Campos 3</button>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Segundo formulario (Segunda Letra) -->
+    <form id="modificarLetraForm2" onsubmit="">
+        <div class="flex-column" id="form2" hidden>
+            <h5 id="h5r"><strong>Especificaciones Segunda Letra:</strong></h5>
+            <div class="col-md-4 mb-3">
+                <label for="numero_boleta_buscar_2" class="form-label n">Número de Letra:</label>
+                <input type="text" class="numeroLetraCambio2" id="numero_boleta_buscar_2" placeholder="Número de Letra">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="importe_nuevo_2" class="form-label n">Importe:</label>
+                <input type="number" class="numeroLetraCambio2" id="importe_nuevo_2" name="importe_nuevo_2" step="0.01">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="guardar" onclick="guardarLetra()">GUARDAR LETRA</button>
+                    <button type="button" class="btn btn-primary" id="guardarDoble" onclick="guardarDosLetras()">GUARDAR 2 LETRAS</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <!-- Modal letra nueva -->
+
+
+
+
+
+
+    <!-- Modal para banco / estado -->
+    <div class="modal fade" id="modalEstadoBanco" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar Estado de la Letra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal -->
+                    <div id="datosFilaSeleccionadaEstadoBanco">
+                        <p id="rapido">Número de letra: <span id="numeroLetraModalEstadoBanco"></span></p>
+                    </div>
+                    <!-- Formulario para seleccionar estado y banco -->
+                    <form id="formularioEstadoBanco">
+                        <div class="mb-3">
+                            <label for="estadoLetra" class="form-label" id="rapido">Estado de la Letra</label>
+                            <select class="form-select" id="estadoLetra" name="estadoLetra">
+                                <option value="ACEPTADA">ACEPTADA</option>
+                                <option value="PROTESTADA">PROTESTADA</option>
+                                <option value="CANCELADA">CANCELADA</option>
+                                <option value="RENOVADO">RENOVADO</option>
+                                <option value="INGRESADA AL BANCO">INGRESADA AL BANCO</option>
+                                <option value="ANULADO">ANULADO</option>
+                                <option value="ANULADO">EMITIDA</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarEstadoBanco()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para el tercer usuario -->
+    <!-- Modal para ingresar fechas del notificador -->
+    <!-- Modal numero unico masivo-->
+
+    <div class="modal fade" id="modalFiltrarLetras" tabindex="-1" aria-labelledby="modalFiltrarLetrasLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFiltrarLetrasLabel">Filtrar Letras y Asignar Código Único</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formFiltrarLetras">
+                        <div class="mb-3">
+                            <label for="fechaBanco" class="form-label">Fecha de Banco</label>
+                            <input type="date" class="form-control" id="fechaBanco" name="fechaBanco" required>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="cargarLetras()">Filtrar</button>
+                    </form>
+                    <div id="resultadosLetras" class="mt-3" style="max-height: 400px; overflow-y: auto;"></div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" onclick="guardarCodigos()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal numero unico masivo-->
+
+
+    <!-- Modal  numero unico -->
+
+    <!--  MODIFICAR LETRA -->
+    <div class="modal fade" id="registroLetraModal" tabindex="-1" aria-labelledby="registroLetraModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registroLetraModalLabel">MODIFICAR LETRA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Campo de entrada para buscar por número de letra -->
+                    <div class="mb-3">
+                        <label for="numero_boleta_buscar" id="rapido" class="form-label">Número de Letra</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="numero_boleta_buscar"
+                                placeholder="Número de Letra">
+                            <button class="btn btn-primary" type="button" onclick="obtenerDatosLetra()">Buscar</button>
+                        </div>
+                    </div>
+                    <!-- Formulario para registrar/modificar letras -->
+                    <form id="modificarLetraForm" onsubmit="guardarCambios(event)">
+                        <input type="hidden" id="numero_boleta_oculto" name="numero_boleta">
+                        <!-- Otros campos del formulario -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="fecha_giro_nueva" id="rapido" class="form-label">Estado</label>
+                                <input type="text" class="form-control" id="estado" name="estado" oninput="validarL(event)" placeholder="Ingrese Estado" readonly>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="ref_giro_nuevo" id="rapido" class="form-label">Referencia de Giro</label>
+                                <input type="text" class="form-control" id="ref_giro_nuevo" name="ref_giro_nuevo" placeholder="Ingrese Referencia">
+                            </div>
+                            
+                            <div></div>
+                            <div class="col-md-4 mb-3">
+                                <label for="fecha_giro_nueva" id="rapido" class="form-label">Fecha de Giro</label>
+                                <input type="date" class="form-control" id="fecha_giro_nueva" name="fecha_giro_nueva">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="fecha_vencimiento_nueva" id="rapido" class="form-label">Fecha de Vencimiento</label>
+                                <input type="date" class="form-control" id="fecha_vencimiento_nueva"
+                                    name="fecha_vencimiento_nueva">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="importe_nuevo" id="rapido" class="form-label">Importe</label>
+                                <input type="number" class="form-control" id="importe_nuevo" name="importe_nuevo"
+                                    step="0.01" placeholder="Ingrese Importe">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="codigo_cliente_nuevo" id="rapido" class="form-label">Código del Cliente (RUC)</label>
+                                <input type="text" class="form-control" id="codigo_cliente_nuevo"
+                                    name="codigo_cliente_nuevo" oninput="validarN(event)" placeholder="Ingrese codigo Cliente">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="razon_social_nueva" id="rapido" class="form-label">Razón Social</label>
+                                <input type="text" class="form-control" id="razon_social_nueva"
+                                    name="razon_social_nueva" placeholder="Ingrese Razon Social">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="moneda_nueva" id="rapido" class="form-label">Moneda</label>
+                                <select class="form-control" id="moneda_nueva" name="moneda_nueva" required>
+                                    <option value="SOLES">SOLES</option>
+                                    <option value="DOLARES">DOLARES AMERICANOS</option>
+                                </select>
+                             </div>
+                             <div class="form-group col-md-3">
+                                <label for="tipo_producto_nuevo" id="rapido">Tipo de Producto:</label>
+                                   <select class="form-control" id="tipo_producto_nuevo" name="tipo_producto_nuevo" required>
+                                          <option value="TELA">Tela</option>
+                                          <option value="HILO">Hilo</option>
+                                          <option value="SST">SST </option>
+                                   </select>
+                              </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="cliente_vendedor_nuevo" id="rapido" class="form-label">Cliente Vendedor</label>
+                                <input type="text" class="form-control" id="cliente_vendedor_nuevo"
+                                    name="cliente_vendedor_nuevo" placeholder="Ingrese Vendedor">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal resgistro letras-->
+    <!-- Contenido del modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar Fecha y Bancos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="datosFilaSeleccionada">
+                        <p id="rapido">Número de letra: <span id="numeroLetraModal"></span></p>
+                    </div>
+                    <form id="formularioFechaEronald">
+                        <div class="mb-3">
+                            <label for="bancoCobro" class="form-label" id="rapido">Banco de Cobro</label>
+                            <select class="form-select" id="bancoCobro" name="bancoCobro">
+                                <option value="SIN BANCO">SIN BANCO</option>
+                                <option value="INTERBANK">INTERBANK</option>
+                                <option value="BCP ">BCP </option>
+                                <option value="SCOTIABANK">SCOTIABANK</option>
+                                <option value="BBVA">BBVA</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaEntregabanco" class="form-label" id="rapido">Fecha Ingreso banco</label>
+                            <input type="date" class="form-control" id="fechaEntregabanco" name="fechaEntregabanco">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="banco_fecha()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Función que oculta los elementos al cargar la página
+        function ocultarElementos() {
+            document.querySelector('[for="moneda"]').style.display = 'none'; 
+            document.getElementById('moneda').style.display = 'none'; 
+    
+            document.getElementById('botonConvertirALetras').style.display = 'none'; 
+    
+            document.querySelector('[for="importeLetras"]').style.display = 'none'; 
+            document.getElementById('importeLetras').style.display = 'none';
+        }
+    
+        // Ejecutar la función al cargar la página
+        window.onload = ocultarElementos;
+    </script>
+
+    <script>
+        function validarInput(input) {
+            
+            const regex = /^[a-zA-Z0-9-]*$/;
+    
+            if (!regex.test(input.value)) {
+                input.value = input.value.slice(0, -1);
+            }
+        }
+    </script>
+    <!--VALIDACIONES PARA EL MODIFICAR LETRA-->
+    <script>
+        function validarL(event) {
+            let valor = event.target.value;
+    
+            valor = valor.replace(/[^a-zA-ZáéíóúÁÉÍÓÚÑñ\s]/g, '');
+    
+            event.target.value = valor;
+        }
+    </script>
+    <script>
+        function validarN(event) {
+            let valor = event.target.value;
+    
+            valor = valor.replace(/[^0-9]/g, '');
+    
+            if (valor.length > 11) {
+                valor = valor.substring(0, 11);
+            }
+    
+            event.target.value = valor;
+        }
+    </script>
+
+
+
+<script>
+    // Manejador de eventos para el botón "Limpiar"
+    document.getElementById('limpiarFirtsLetter').addEventListener('click', function() {
+        document.getElementById('numero_boleta_buscar_1').value = '';  
+        document.getElementById('importe_nuevo_1').value = '';  o
+        
+
+        document.getElementById('numero_boleta_buscar_2').value = '';  
+        document.getElementById('importe_nuevo_2').value = '';  
+       
+    });
+</script>
+
+<script>
+
+
+</script>
+    <!--FINAL DE VALIDACIONES PARA EL MODIFICAR LETRA-->
+
+<!--VALIDACIONES PARA EL REGISTRO DE NUEVA LETRA-->
+
+<script>
+function toggleForm() {
+    var formulario = document.getElementById("formulario");
+    var btnMostrar = document.getElementById("btnMostrar");
+    var btnOcultar = document.getElementById("btnOcultar");
+    var btnGuardarDoble = document.getElementById("guardarDoble");
+
+    if (btnGuardarDoble.style.display === "none") {
+        mostrarBotonGuardar();  // Si el botón está oculto, lo mostramos
+    } else {
+        ocultarBotonGuardar();  // Si el botón está visible, lo ocultamos
+    }
+    
+    // Si el formulario está oculto
+    if (formulario.style.display === "none") {
+        formulario.style.display = "block";  
+        btnMostrar.style.display = "none";  
+        btnOcultar.style.display = "inline";  
+    } else {
+        formulario.style.display = "none";  
+        btnMostrar.style.display = "inline";  
+        btnOcultar.style.display = "none"; 
+    }
+}
+
+function ocultarBotonGuardar() {
+    var btnGuardarDoble = document.getElementById("guardarDoble");
+    btnGuardarDoble.style.display = "none";  // Oculta el botón "GUARDAR 2 LETRAS"
+}
+function mostrarBotonGuardar() {
+    var btnGuardarDoble = document.getElementById("guardarDoble");
+    btnGuardarDoble.style.display = "inline";  // Muestra el botón "GUARDAR 2 LETRAS"
+}
+
+
+
+</script>
+
+<!--REGISTRAR 2 LETRAS-->
+
+
+
+<script>
+
+document.getElementById('btnMostrar').addEventListener('click', function() {
+    // Verificar si los campos están ocultos
+    var isHidden = document.getElementById('form1').hasAttribute('hidden');
+
+    if (isHidden) {
+        document.getElementById('form1').removeAttribute('hidden');
+        document.getElementById('form2').removeAttribute('hidden');
+        document.getElementById('formulario').style.display = 'block';  
+        
+        // Ocultar los campos específicos (Número de letra y Importe en números) y sus labels
+        document.getElementById('numero_boleta').style.display = 'none';  
+        document.querySelector('label[for="numero_boleta"]').style.display = 'none'; 
+        
+        document.getElementById('importe').style.display = 'none'; 
+        document.querySelector('label[for="importe"]').style.display = 'none';  
+
+        this.textContent = "ANULAR REGISTRO DOBLE";
+        this.classList.remove('btn-secondary');
+        this.classList.add('btn-success');
+        
+        // Ocultar el botón "REGISTRAR 1 LETRA"
+        document.getElementById('btnRegistrar1Letra').style.display = 'none';  
+        
+        // Ocultar el botón "GUARDAR LETRA"
+        document.getElementById('guardar').style.display = 'none';  
+    } else {
+        // Ocultar los formularios y los botones
+        document.getElementById('form1').setAttribute('hidden', 'true');
+        document.getElementById('form2').setAttribute('hidden', 'true');
+        document.getElementById('formulario').style.display = 'none';  
+        
+        document.getElementById('numero_boleta').style.display = 'block';  
+        document.querySelector('label[for="numero_boleta"]').style.display = 'block';  
+        
+        document.getElementById('importe').style.display = 'block';  
+        document.querySelector('label[for="importe"]').style.display = 'block';  
+        
+     
+        this.textContent = "REGISTRAR 2 LETRAS";
+        this.classList.remove('btn-success');
+        this.classList.add('btn-secondary');
+        
+       
+        document.getElementById('btnRegistrar1Letra').style.display = 'inline-block';
+        
+   
+        document.getElementById('guardar').style.display = 'inline-block';  
+    }
+});
+
+</script>
+
+<script>
+    function validateNumbers(event) {
+        const input = event.target;
+        
+        input.value = input.value.replace(/[^0-9]/g, '');
+        
+        if (input.value.length > 11) {
+            input.value = input.value.substring(0, 11);
+        }
+    }
+</script>
+
+
+<script>
+    function validateImporte(event) {
+    let value = event.target.value;
+    
+    event.target.value = value.replace(/[^0-9.,]/g, '');
+
+    event.target.value = event.target.value.replace(/,/g, '.');
+}
+
+</script>
+<script>
+    function validateNumeroBoleta(event) {
+    let value = event.target.value;
+    
+    event.target.value = value.replace(/[^a-zA-Z0-9-]/g, '');
+}
+
+</script>
+
+
+<script>
+    function validateCelular(event) {
+    let value = event.target.value;
+
+    value = value.replace(/[^0-9]/g, '');
+
+    if (value.length > 9) {
+        value = value.slice(0, 9); 
+    }
+
+    event.target.value = value;
+}
+
+</script>
+
+<script>
+    function validateDni(event) {
+    let value = event.target.value;
+
+    value = value.replace(/[^0-9]/g, '');
+
+    if (value.length > 8) {
+        value = value.slice(0, 8); 
+    }
+
+    event.target.value = value;
+}
+
+</script>
+
+
+
+
+
+<script>
+document.getElementById('numero_boleta_buscar').addEventListener('input', function(event) {
+    var regex = /^[a-zA-Z0-9-]*$/;
+
+    if (!regex.test(event.target.value)) {
+        event.target.value = event.target.value.replace(/[^a-zA-Z0-9-]/g, ''); // Reemplazar cualquier carácter no válido
+    }
+});
+
+</script>
+
+
+
+
+<!--FIN DE ESTE SEGMENTO-->
+
+
+
+
+<!--Esto para el numero de letra-->
+<script>
+    function validarEntrada(event) {
+        const valor = event.target.value;
+
+        const soloAlfanumerico = /^[a-zA-Z0-9-]*$/;
+
+        if (!soloAlfanumerico.test(valor)) {
+            event.target.value = valor.slice(0, -1);
+        }
+    }
+</script>
+
+
+<script>
+    function validarNumeros(event) {
+        let input = event.target;
+        let valor = input.value;
+        let errorMessage = document.getElementById('errorRUC'); 
+
+        if (/[^0-9]/.test(valor)) {
+            input.setCustomValidity('Ingrese solo números');
+            input.placeholder = 'Ingrese el Ruc';  
+            input.style.color = 'red';  
+            errorMessage.style.display = 'block'; 
+        } else {
+            input.setCustomValidity('');  
+            input.placeholder = 'Ingrese el Ruc'; 
+            input.style.color = ''; 
+            errorMessage.style.display = 'none';  
+        }
+
+        // Limitar la longitud a 11 caracteres
+        if (valor.length > 11) {
+            valor = valor.substring(0, 11);  
+        }
+
+        input.value = valor.replace(/[^0-9]/g, '');  
+    }
+
+    // Función para validar solo letras 
+    function validarLetras(event) {
+        let input = event.target;
+        let valor = input.value;
+        let errorMessage = document.getElementById('errorEstadoLetra');  
+        if(input.id === 'razonSocial') {
+            errorMessage = document.getElementById('errorRazonSocial'); 
+        }
+        if(input.id === 'estadoLetra') {
+            errorMessage = document.getElementById('errorEstadoLetra');  
+        }
+
+        if (/[^A-Za-z\s]/.test(valor)) {
+            input.setCustomValidity('Ingrese solo letras');
+            input.placeholder = 'Solo letras permitidas';  
+            input.style.color = '';  
+            errorMessage.style.display = 'block';  
+        } else {
+            input.setCustomValidity('');  
+            input.placeholder = 'Ingrese solo letras'; 
+            input.style.color = '';  
+            errorMessage.style.display = 'none';  
+        }
+
+        input.value = valor.replace(/[^A-Za-z\s]/g, '');  
+    }
+</script>
+
+
+</script>
+    <script>
+
+        //ingreso masivo de numero unico
+        function cargarLetras() {
+            var fechaBanco = document.getElementById('fechaBanco').value;
+            if (!fechaBanco) {
+                alert("Por favor, seleccione una fecha.");
+                return;
+            }
+
+            fetch(`/filtrar_letras?fecha_banco=${fechaBanco}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        var resultadosLetras = document.getElementById('resultadosLetras');
+                        resultadosLetras.innerHTML = ''; // Limpiar resultados previos
+                        var letras = data.letras;
+
+                        if (letras.length > 0) {
+                            var tabla = '<table class="table table-bordered">';
+                            tabla += '<thead><tr><th>N°</th><th>Número Único</th></tr></thead><tbody>';
+
+                            letras.forEach(letra => {
+                                tabla += `<tr>
+                            <td>${letra.numero_boleta}</td>
+                            <td><input type="text" class="form-control" id="numero_unico_${letra.numero_boleta}" value="${letra.numero_unico || ''}"></td>
+                        </tr>`;
+                            });
+
+                            tabla += '</tbody></table>';
+                            resultadosLetras.innerHTML = tabla;
+
+                        } else {
+                            resultadosLetras.innerHTML = '<p>No se encontraron letras para la fecha seleccionada.</p>';
+                        }
+                    } else {
+                        alert(data.message || 'Error al filtrar las letras.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al filtrar letras:', error);
+                    alert('Error al filtrar las letras.');
+                });
+        }
+
+        function guardarCodigos() {
+            var filas = document.querySelectorAll('#resultadosLetras tbody tr');
+            var letras = [];
+
+            filas.forEach(fila => {
+                var numeroBoleta = fila.cells[0].innerText;
+                var numeroUnico = fila.cells[1].querySelector('input').value; // Cambiado para coincidir con el índice de la celda correcta
+                letras.push({ numero_boleta: numeroBoleta, numero_unico: numeroUnico });
+            });
+
+            fetch('/guardar_codigos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ letras: letras })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Códigos únicos guardados exitosamente.');
+                        // Opcionalmente, puedes cerrar el modal aquí
+                        $('#modalFiltrarLetras').modal('hide');
+                    } else {
+                        alert(data.message || 'códigos únicos guardados.');
+                    }
+                })
+                .catch(error => {
+                    console.error(' códigos únicos guardados:', error);
+                    alert('códigos únicos guardados.');
+                });
+            buscarLetras();
+        }
+        //ingreso masivo de numero unico
+        // buscar letra para modificacion
+
+
+        //buscaar letra para modificacion
+
+
+        function guardarCambios(event) {
+            event.preventDefault();
+
+            var formData = new FormData(document.getElementById('modificarLetraForm'));
+
+            fetch('/guardar_cambios', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Letra guardada exitosamente');
+                        // Cerrar el modal
+                        var registroModal = bootstrap.Modal.getInstance(document.getElementById('registroModal'));
+                        registroModal.hide();
+
+                        // Recargar la página o actualizar la tabla para reflejar los cambios
+                        location.reload(); // O usa una función para actualizar la tabla si no quieres recargar toda la página
+                    } else {
+                        alert('Error al guardar la letra: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Hubo un error al guardar la letra.');
+                });
+        }
+        // buscar letra para modificacion
+
+
+
+        //ABRIR GENERAR 2 LETRAS
+
+
+
+
+        //abrir modal letra nueva
+        var botonAbrirModal = document.getElementById('botonAbrirModal');
+        var modal = new bootstrap.Modal(document.getElementById('modalFormulario'), { backdrop: 'static', keyboard: false });
+
+        // Agregar un evento de clic al botón para abrir el modal
+        botonAbrirModal.addEventListener('click', function () {
+            // Mostrar el modal
+            modal.show();
+        });
+
+        document.querySelector('.modal .btn-secondary').addEventListener('click', function () {
+            modal.hide();
+        });
+
+
+
+        //modal nueva letra
+
+
+        // registro letras
+        function convertirALetras() {
+            var importe = parseFloat(document.getElementById('importe').value);
+            var moneda = document.getElementById('moneda').value;
+            var importeLetras = numeroLetras(importe, moneda);
+            document.getElementById('importeLetras').value = importeLetras;
+        }
+        function calcularFechaVencimiento() {
+            var fechaGiro = new Date(document.getElementById('fecha_giro').value);
+            var diasCredito = parseInt(document.getElementById('dias_credito').value);
+
+            if (!isNaN(fechaGiro.getTime()) && !isNaN(diasCredito)) {
+                var nuevaFecha = new Date(fechaGiro);
+                nuevaFecha.setDate(nuevaFecha.getDate() + diasCredito);
+                var nuevaFechaFormateada = nuevaFecha.toISOString().split('T')[0];
+                document.getElementById('fecha_vence').value = nuevaFechaFormateada;
+            }
+        }
+        // Asocia la función convertirALetras al evento de clic en un botón específico
+        document.getElementById('botonConvertirALetras').addEventListener('click', convertirALetras);
+
+        // Asocia la función calcularFechaVencimiento al evento input tanto del campo "Fecha de Giro" como del campo "Días de Crédito"
+        document.getElementById('fecha_giro').addEventListener('input', calcularFechaVencimiento);
+        document.getElementById('dias_credito').addEventListener('input', calcularFechaVencimiento);
+
+
+        //modal nueva letra
+
+
+
+        //abrir modal letra nueva
+
+
+        function buscarLetras() {
+            var ruc = document.getElementById('ruc').value;
+            var razonSocial = document.getElementById('razonSocial').value;
+            var numeroBoleta = document.getElementById('numeroBoleta').value;
+            var fechaDesde = document.getElementById('fechaDesde').value;
+            var fechaHasta = document.getElementById('fechaHasta').value;
+            var estadoLetra = document.getElementById('estadoLetraInput').value; // Obtener el valor del input
+
+            console.log('Estado Letra:', estadoLetra); // Depuración
+
+            if (fechaDesde && fechaHasta && fechaDesde > fechaHasta) {
+                alert('La fecha desde no puede ser mayor que la fecha hasta.');
+                return; // Detener la búsqueda si las fechas no son válidas
+            }
+
+
+            // Realizar la solicitud AJAX al servidor
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/buscar_letras', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Manejar la respuesta del servidor y actualizar la tabla de resultados
+                    var resultados = JSON.parse(xhr.responseText);
+                    mostrarResultados(resultados);
+                }
+            };
+
+            // Enviar los parámetros de búsqueda al servidor
+            var params = 'ruc=' + encodeURIComponent(ruc) +
+                '&numeroBoleta=' + encodeURIComponent(numeroBoleta) +
+                '&razonSocial=' + encodeURIComponent(razonSocial) +
+                '&fechaDesde=' + encodeURIComponent(fechaDesde) +
+                '&fechaHasta=' + encodeURIComponent(fechaHasta) +
+                '&estadoLetra=' + encodeURIComponent(estadoLetra); // Agregar el nuevo parámetro
+            console.log('Params:', params); // Depuración
+            xhr.send(params);
+        }
+        //cerrar boton modales
+        var botonesCerrarModal = document.querySelectorAll('[data-bs-dismiss="modal"]');
+
+        // Iterar sobre cada botón de cierre de modal y agregar un evento de clic
+        botonesCerrarModal.forEach(function (botonesCerrarModal) {
+            botonCerrarModal.addEventListener('click', function () {
+
+
+                // Obtener el modal correspondiente al botón de cierre
+                var modal = new bootstrap.Modal(this.closest('.modal'));
+                // Ocultar el modal
+                modal.hide();
+
+            });
+        });
+        function mostrarResultados(resultados) {
+            // Construir la tabla con los resultados y agregar clases de Bootstrap
+            var resultadosTabla = '<table class="table table-bordered table-hover table-sm">';
+            resultadosTabla += '<thead class="table-dark"><tr><th>N° LETRA</th><th>RUC</th><th>CLIENTE</th><th>FECHA EMISIÓN</th><th>FECHA VCTO</th><th>IMPORTE</th><th>MONEDA</th><th>MODIF.</th><th>BANCO</th><th>NUMERO UNICO</th><th>ESTADO</th><th>PRODUCTO</th><th>VENDEDOR</th><th>REF. DOCUMENTO</th><th>FECHA BANCO</th></tr></thead>';
+            resultadosTabla += '<tbody>';
+
+            for (var i = 0; i < resultados.length; i++) {
+                resultadosTabla += '<tr onmouseover="resaltarFila(this)" onmouseout="restablecerFila(this)">';  // Agrega eventos onmouseover y onmouseout
+                resultadosTabla += '<td class="text-nowrap">' + resultados[i].numero_boleta + '</td>';
+                resultadosTabla += '<td class="text-nowrap">' + resultados[i].cod_cliente + '</td>';
+                resultadosTabla += '<td class="text-nowrap">' + resultados[i].razon_social + '</td>';
+                resultadosTabla += '<td class="text-nowrap">' + moment(resultados[i].fecha_giro).format('DD-MM-YYYY') + '</td>';
+                resultadosTabla += '<td class="text-nowrap">' + (moment(resultados[i].fecha_vence).diff(moment(), 'days') <= 2 ? '<span style="color: red;">' + moment(resultados[i].fecha_vence).format('DD-MM-YYYY') + '</span>' : moment(resultados[i].fecha_vence).format('DD-MM-YYYY')) + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].importe + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].moneda + '</td>';
+                resultadosTabla += '<td class="text-nowrap"><input type="checkbox" class="form-check-input" onclick="seleccionar(this)"></td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].banco + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].numero_unico + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].estado + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].tipo_producto + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].cliente_vendedor + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + resultados[i].ref_giro + '</td>';
+                resultadosTabla += '<td class="text-end text-nowrap">' + moment(resultados[i].fecha_banco).format('DD-MM-YYYY') + '</td>';
+
+
+                // Agregar botones para modificar y guardar
+
+                resultadosTabla += '</tr>';  // Cierra la etiqueta </tr> en cada iteración
+            }
+
+            resultadosTabla += '</tbody>';
+            resultadosTabla += '</table>';
+
+            // Mostrar la tabla en el elemento con id "resultadosTabla"
+            document.getElementById('resultadosTabla').innerHTML = resultadosTabla;
+        }
+
+        //muestra tabla cliente
+
+
+
+
+
+
+// Función para abrir el modal
+function abrirModal() {
+    var filaSeleccionada = document.querySelector('.seleccionada');  // Obtiene la fila seleccionada
+
+    if (filaSeleccionada) {
+        var numeroLetra = filaSeleccionada.cells[0].innerText;  // Obtiene el número de la letra desde la fila seleccionada
+
+        // Hacer una solicitud AJAX para obtener los datos de la letra
+        fetch('/buscar_letra/' + numeroLetra, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Obtener el estado de la letra desde la respuesta del servidor
+                let estadoLetra = data.letra.estado ? data.letra.estado.toUpperCase() : '';
+
+                // Mostrar el número de letra en el modal
+                document.getElementById('numeroLetraModal').innerText = numeroLetra;
+
+                // Verificar el estado de la letra
+                if (estadoLetra === 'CANCELADA' || estadoLetra === 'ANULADA' || estadoLetra === 'ANULADO' || estadoLetra === 'CANCELADO' )  {
+                    alert(`La letra está ${estadoLetra} y no se pueden modificar los datos.`);
+                    // Aquí evitamos abrir el modal si el estado es CANCELADA o ANULADA
+                } else {
+                    // Si la letra no está cancelada o anulada, habilitamos los campos y mostramos el modal
+                    habilitarCamposFormulario();  // Aseguramos que los campos estén habilitados
+                    var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                    modal.show();  // Abre el modal
+                }
+            } else {
+                alert('No se encontró la letra o hubo un error.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al obtener los datos de la letra.');
+        });
+    } else {
+        alert('Por favor, seleccione una fila antes de abrir el modal de entrega de letra.');
+    }
+}
+
+
+
+
+
+// Función para habilitar los campos del formulario
+function habilitarCamposFormulario() {
+    // Selecciona todos los campos del modal
+    const campos = document.querySelectorAll('#exampleModal input, #exampleModal select');
+    
+    // Itera sobre los campos y los habilita
+    campos.forEach(campo => campo.disabled = false);  
+}
+
+
+
+
+
+        //seleccion de fila
+        function seleccionar(checkbox) {
+            var fila = checkbox.parentNode.parentNode;
+            fila.classList.toggle('seleccionada');
+
+            // Verificar si al menos una fila está seleccionada para abrir el modal
+            var filasSeleccionadas = document.querySelectorAll('.seleccionada');
+            if (filasSeleccionadas.length > 0) {
+                var numeroLetra = filasSeleccionadas[0].cells[0].innerText; // Obtener el número de letra de la primera fila seleccionada
+                document.getElementById('numeroLetraModal').innerText = numeroLetra;
+                // Aquí abre el modal que necesitas
+                abrirModalFechaEronald();
+            }
+        }
+        //seleccion de fila
+        //fchabanco
+
+
+
+        function banco_fecha() {
+
+            var bancoCobro = document.getElementById('bancoCobro').value;
+            var fechaEntregaBanco = document.getElementById('fechaEntregabanco').value;
+            var filasSeleccionadas = document.querySelectorAll('.seleccionada');
+            var numerosLetra = [];
+            filasSeleccionadas.forEach(function (fila) {
+                var numeroLetra = fila.cells[0].innerText;
+
+                numerosLetra.push(numeroLetra);
+            });
+
+            // Crear un objeto con los datos a enviar al servidor
+            var data = {
+                bancoCobro: bancoCobro,
+                fechaEntregaBanco: fechaEntregaBanco,
+                numerosLetra: numerosLetra,
+            };
+
+            // Crear una solicitud AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/guardar_banco_fecha_multiples', true); // Ajusta la URL según la ruta de tu servidor
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Definir el manejo de la respuesta de la solicitud AJAX
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message);
+                        buscarLetras();
+
+                    } else {
+                        // Manejar cualquier error que ocurra durante la solicitud AJAX
+                        alert('Ocurrió un error al procesar la solicitud.');
+                    }
+                }
+            };
+
+            // Enviar los datos al servidor
+            xhr.send(JSON.stringify(data));
+        }
+
+
+        //fchabanco
+        // Evento para manejar clics en las filas y seleccionar múltiples filas
+        document.querySelectorAll('.filaTabla').forEach(function (fila) {
+            fila.addEventListener('click', function (event) {
+                if (event.ctrlKey || event.metaKey) { // Verifica si se está manteniendo presionada una tecla modificadora (Ctrl/Cmd)
+                    seleccionarMultiple(fila);
+                } else {
+                    seleccionar(this.querySelector('.checkboxSeleccion')); // Utiliza la función de selección individual
+                }
+            });
+        });
+
+        // Función para manejar la selección múltiple con teclado
+        function seleccionarMultiple(fila) {
+            fila.classList.add('seleccionada');
+        }
+
+
+
+
+// Función para abrir el modal de estado y banco
+function abrirModalEstadoBanco() {
+    var filaSeleccionada = document.querySelector('.seleccionada');
+    if (filaSeleccionada) {
+        var numeroLetra = filaSeleccionada.cells[0].innerText;
+
+        // Hacer una solicitud AJAX para obtener el estado de la letra
+        fetch('/buscar_letra/' + numeroLetra, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Obtener el estado de la letra desde la respuesta
+                let estadoLetra = data.letra.estado ? data.letra.estado.toUpperCase() : '';
+
+                // Si el estado de la letra es CANCELADA o ANULADA, no se abre el modal
+                if (estadoLetra === 'CANCELADA' || estadoLetra === 'ANULADA' || estadoLetra === 'ANULAD0'  || estadoLetra === 'CANCELADO' ) {
+                    alert(`La letra está ${estadoLetra} y no se pueden modificar los datos.`);
+                } else {
+                    // Mostrar el número de la letra en el modal
+                    document.getElementById('numeroLetraModalEstadoBanco').innerText = numeroLetra;
+                    var modalEstadoBanco = new bootstrap.Modal(document.getElementById('modalEstadoBanco'));
+                    modalEstadoBanco.show(); // Abre el modal de estado banco
+                }
+            } else {
+                alert('No se encontró la letra o hubo un error.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al obtener los datos de la letra.');
+        });
+    } else {
+        alert('Por favor, seleccione una fila antes de abrir el modal de estado y banco.');
+    }
+}
+
+
+
+
+
+
+
+
+
+        // Función para guardar el estado y banco seleccionados
+        function guardarEstadoBanco() {
+            var estadoLetra = document.getElementById('estadoLetra').value;
+
+            var filasSeleccionadas = document.querySelectorAll('.seleccionada');
+
+            var numerosLetra = [];
+
+            // Iterar sobre las filas seleccionadas para obtener sus números de letra
+            filasSeleccionadas.forEach(function (fila) {
+                var numeroLetra = fila.cells[0].innerText;
+                numerosLetra.push(numeroLetra);
+            });
+
+            // Crear un objeto con los datos a enviar al servidor
+            var data = {
+                estadoLetra: estadoLetra,
+                numerosLetra: numerosLetra
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/guardar_estado_letra_multiples', true); // Cambiar la URL según corresponda
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message);
+                        // Llamar a la función para actualizar los datos en la plataforma web
+                        buscarLetras();
+                    } else {
+                        alert('Error al guardar los datos en el servidor.');
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(data)); // Enviar los datos del formulario al servidor
+        }
+
+
+        // Cerrar el modal después de guardar los datos
+
+
+        //modificar fila
+
+
+
+        // Función para abrir el modal del notificador
+        function abrirModalNotificador() {
+            var filaSeleccionada = document.querySelector('.seleccionada');
+            if (filaSeleccionada) {
+                var numeroLetra = filaSeleccionada.cells[0].innerText;
+                document.getElementById('numeroLetraModalNotificador').innerText = numeroLetra;
+                var modalNotificador = new bootstrap.Modal(document.getElementById('numero_unico'));
+                modalNotificador.show();
+            } else {
+                alert('Por favor, seleccione una fila antes de abrir el modal del notificador.');
+            }
+        }
+
+        // Función para guardar numero unico de banco
+        function guardarNumeroUnico() {
+            // Obtener el número único desde el input
+            var numeroUnico = document.getElementById('numero_unico_input').value;
+
+            // Obtener todas las filas seleccionadas
+            var filasSeleccionadas = document.querySelectorAll('.seleccionada');
+
+            // Crear un arreglo para almacenar los números de letra de las filas seleccionadas
+            var numerosLetra = [];
+
+            // Iterar sobre las filas seleccionadas para obtener sus números de letra
+            filasSeleccionadas.forEach(function (fila) {
+                var numeroLetra = fila.cells[0].innerText;
+                numerosLetra.push(numeroLetra);
+            });
+
+            // Crear un objeto con los datos a enviar al servidor
+            var data = {
+                numeroUnico: numeroUnico,
+                numerosLetra: numerosLetra
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/guardar_numero_unico', true); // Cambiar la URL según corresponda
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message);
+                        // Llamar a la función para actualizar los datos en la plataforma web
+                        buscarLetras();
+                    } else {
+                        alert('Error al guardar los datos en el servidor.');
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(data)); // Enviar los datos del formulario al servidor
+        }
+        // Función para guardar numero unico de banco
+        //excell   descargar
+        function descargarExcel() {
+            // Obtener los datos de la tabla
+            var table = document.getElementById('resultadosTabla');
+            var rows = table.querySelectorAll('tr');
+
+
+
+            //Asegurarse que exista contenido
+            if (rows.length === 0) {
+                alert('No datos para descargar');
+                return;
+            }
+
+
+
+
+            // Crear un nuevo libro de Excel
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.aoa_to_sheet([]);
+
+            // Obtener los títulos de la tabla
+            var headerRow = rows[0];
+            var headerCells = headerRow.querySelectorAll('th');
+            var headerData = [];
+            for (var k = 0; k < headerCells.length; k++) {
+                headerData.push(headerCells[k].textContent || headerCells[k].innerText);
+            }
+
+            // Agregar los títulos al principio del array de datos
+            var data = [];
+            data.push(headerData); // Agregar los títulos como primer elemento
+            // Iterar sobre las filas de la tabla
+
+            //estilos
+                
+
+            for (var i = 1; i < rows.length; i++) {
+                var row = rows[i];
+                var rowData = [];
+
+                // Iterar sobre las celdas de la fila
+                var cells = row.querySelectorAll('td');
+                for (var j = 0; j < cells.length; j++) {
+                    var cell = cells[j];
+                    var value = cell.textContent || cell.innerText;
+
+                    // Verificar si el valor es una fecha
+                    var dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+                    if (dateRegex.test(value)) {
+                        // Si es una fecha, formatearla como "dd/mm/yyyy"
+                        var parts = value.split('-');
+                        value = parts[0] + '/' + parts[1] + '/' + parts[2];
+                    }
+
+                    // Verificar si la columna es "IMPORTE" y si el valor es numérico
+                    if (headerData[j] === "IMPORTE") {
+                        var numericValue = parseFloat(value.replace(/[^0-9.-]+/g, "")); // Eliminar caracteres no numéricos
+                        if (!isNaN(numericValue)) {
+                            // Si es numérico, convertirlo a número
+                            value = numericValue;
+                        }
+                    } else if (headerData[j] === "FECHA EMISIÓN" || headerData[j] === "FECHA VCTO" || headerData[j] === "FECHA BANCO") {
+                        // Eliminar espacios en blanco de la fecha
+                        value = value.trim();
+                        // Si la columna es una de las columnas de fecha, formatearla como fecha corta
+                        var dateValue = moment(value, 'DD-MM-YYYY').toDate(); // Convertir la fecha al formato de JavaScript
+                        value = moment(dateValue).format('DD/MM/YYYY'); // Formatear solo la fecha
+                        ws[XLSX.utils.encode_cell({ r: i, c: j })] = { t: 'd', z: 'dd/mm/yyyy', v: dateValue }; // Aplicar formato de fecha a la celda
+                    }
+
+                    rowData.push(value);
+                }
+                data.push(rowData);
+            }
+
+            XLSX.utils.sheet_add_aoa(ws, data);
+
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+            XLSX.writeFile(wb, 'Reporte_Letras.xlsx');
+        }
+
+        //excell   descargar
+
+
+
+        function nuevaConsulta() {
+            // Limpiar la tabla
+            document.getElementById('resultadosTabla').innerHTML = '';
+            //LIMIPIAR CASILLA 
+            document.getElementById('ruc').value = '';
+            document.getElementById('numeroBoleta').value = '';
+            document.getElementById('razonSocial').value = '';
+            document.getElementById('fechaDesde').value = '';
+            document.getElementById('fechaHasta').value = '';
+            document.getElementById('estadoLetraInput').value = '';
+        }
+
+
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/letrasnumeros.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+
+</body>
+
+</html>
